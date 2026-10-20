@@ -1,8 +1,10 @@
 node_modules/
 **/node_modules/
+
 **/.env
 **/dist/
+
 .DS_Store
-uploads
-**/uploads
-/server/uploads
+
+# Ignore uploaded files in any directory
+**/uploads/
