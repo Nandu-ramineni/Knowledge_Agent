@@ -4,7 +4,7 @@ import { FileText } from "lucide-react";
 
 import HealthCards from "./components/HealthCards.jsx";
 import DocumentUpload from "./components/Documentupload.jsx";
-import DocumentList from "./components/Documents.jsx";
+import DocumentList from "./components/DocumentList.jsx";
 
 export default function App() {
     const [health, setHealth] = useState(null);
@@ -113,6 +113,7 @@ export default function App() {
                 <DocumentList
                     documents={documents}
                     loading={loading}
+                    onRefresh={fetchDocuments}
                 />
             </section>
 

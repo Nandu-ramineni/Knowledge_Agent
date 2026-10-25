@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { upload } from "../config/upload.js";
-import { getDocuments, getDocumentStatus, uploadDocument } from "../controllers/document.controller.js";
+import { getDocumentChunks, getDocuments, getDocumentStatus, uploadDocument } from "../controllers/document.controller.js";
 
 
 
@@ -15,5 +15,6 @@ router.post(
 router.get("/",getDocuments);
 
 router.get("/:id/status", getDocumentStatus);
+router.get("/:id/chunks", getDocumentChunks);
 
 export default router;

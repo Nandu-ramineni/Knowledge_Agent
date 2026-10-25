@@ -155,3 +155,51 @@ export const getDocumentStatus = async(req,res) => {
         });
     }
 }
+
+export const getDocumentChunks = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const document = await pool.query(
+            `SELECT id, title, status, chunk_count
+            FROM documents
+            WHERE id = $1`,
+            [id]
+        );
+
+        if (document.rowCount === 0) {
+            return res.status(404).json({
+                success: false,
+                error: "Document not found",
+            });
+        }
+
+        const chunks = await pool.query(
+            `SELECT
+                id,
+                chunk_index,
+                content,
+                char_count,
+                page_start,
+                page_end,
+                metadata
+            FROM document_chunks
+            WHERE document_id = $1
+            ORDER BY chunk_index ASC`,
+            [id]
+        );
+
+        return res.json({
+            success: true,
+            document: document.rows[0],
+            data: chunks.rows,
+        });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            success: false,
+            error: "Unable to fetch document chunks",
+        });
+    }
+}
